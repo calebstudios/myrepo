@@ -49,3 +49,48 @@ x / sum(x, na.rm = TRUE)
 sd(x, na.rm = TRUE) / mean(x, na.rm = TRUE)
 
 mean(is.na(x))
+
+View(mtcars)
+
+mtcars %>% 
+  split(.$cyl) %>% # from base R
+  map(~ lm(mpg ~ wt, data = .)) %>% 
+  map(summary) %>% 
+  map_dbl("r.squared")
+
+search()
+
+#install.packages("repurrrsive")
+library(repurrrsive)
+
+(3:5) ^ 2
+sqrt(c(9, 16, 25))
+
+map(c(9, 16, 25), sqrt)
+
+map(got_chars[1:4], "name")
+
+map(got_chars[5:8], 3)
+
+got_chars %>% 
+  map("name")
+
+got_chars %>% 
+  map(3)
+
+map_chr(got_chars[9:12], "name")
+
+map_chr(got_chars[13:16], 3)
+
+got_chars[[3]][c("name", "culture", "gender", "born")]
+
+x <- map(got_chars, `[`, c("name", "culture", "gender", "born"))
+str(x[16:17])
+
+search()
+#install.packages("magrittr")
+library(magrittr)
+library(tidyverse)
+
+x <- map(got_chars, magrittr::extract, c("name", "culture", "gender", "born"))
+str(x[18:19])
